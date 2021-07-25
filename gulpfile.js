@@ -8,8 +8,7 @@ const sass         = require('gulp-sass')(require('sass'))
 const autoprefixer = require('gulp-autoprefixer')
 const concat       = require('gulp-concat')
 const babel        = require('gulp-babel')
-const uglify       = require('gulp-uglify-es').default()
-const notify       = require('gulp-notify')
+const uglify       = require('gulp-uglify')
 const del          = require('del')
 
 // Build HTML & Pages
@@ -59,9 +58,7 @@ const buildScripts = () => {
             presets: ['@babel/env']
         }))
         .pipe(concat('main.js'))
-        .pipe(uglify({
-            toplevel: true // !!!
-        }).on('error', notify.onError))
+        .pipe(uglify())
         .pipe(sourcemaps.write())
         .pipe(plumber.stop())
         .pipe(dest('dist/js/'))
@@ -122,4 +119,4 @@ exports.buildScipts = buildScripts
 exports.buildFonts  = buildFonts
 exports.buildImages = buildImages
 exports.cleanBuild  = cleanBuild
-exports.default = series(cleanBuild, parallel(buildHtml, buildStyles, buildScripts, buildFonts, buildImages), watcher)
+exports.default = series(cleanBuild, buildScripts, parallel(buildHtml, buildStyles, buildFonts, buildImages), watcher)
