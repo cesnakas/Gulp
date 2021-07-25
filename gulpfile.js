@@ -10,7 +10,7 @@ const concat       = require('gulp-concat');
 const del          = require('del');
 
 // Build HTML & Pages
-function buildHtml() {
+const buildHtml = () => {
     panini.refresh();
     return src('src/pages/*.html', { base: 'src/pages/' })
         .pipe(plumber())
@@ -27,7 +27,7 @@ function buildHtml() {
 }
 
 // Build a Styles
-function buildStyles() {
+const buildStyles = () => {
     return src('src/scss/**/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -45,7 +45,7 @@ function buildStyles() {
 }
 
 // Build a Scripts
-function buildScripts() {
+const buildScripts = () => {
     return src([
         // 'node_modules/...',
         'src/js/main.js',
@@ -60,14 +60,14 @@ function buildScripts() {
 }
 
 // Build a Fonts
-function buildFonts() {
+const buildFonts = () => {
     return src('src/fonts/**/*.*')
         .pipe(dest('dist/fonts/'))
         .pipe(browserSync.stream())
 }
 
 // Build a Images
-function buildImages() {
+const buildImages = () => {
     return src('src/images/**/*')
         .pipe(plumber())
         .pipe(plumber.stop())
@@ -76,7 +76,7 @@ function buildImages() {
 }
 
 // Clean a Build
-function cleanBuild() {
+const cleanBuild = () => {
     return del([
         './*.html',
         './dist/*',
@@ -85,7 +85,7 @@ function cleanBuild() {
 }
 
 // Watch
-function watcher(done) {
+const watcher = (done) => {
     browserSync.init({
         server: { baseDir: ['./'] },
         notify: false,
