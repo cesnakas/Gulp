@@ -1,17 +1,20 @@
 'use strict';
-const { src, dest, series, parallel, watch } = require('gulp');
-const browserSync  = require('browser-sync').create();
-const plumber      = require('gulp-plumber');
-const panini       = require('panini');
-const sourcemaps   = require('gulp-sourcemaps');
-const sass         = require('gulp-sass')(require('sass'));
-const autoprefixer = require('gulp-autoprefixer');
-const concat       = require('gulp-concat');
-const del          = require('del');
+const { src, dest, series, parallel, watch } = require('gulp')
+const browserSync  = require('browser-sync').create()
+const plumber      = require('gulp-plumber')
+const panini       = require('panini')
+const sourcemaps   = require('gulp-sourcemaps')
+const sass         = require('gulp-sass')(require('sass'))
+const autoprefixer = require('gulp-autoprefixer')
+const concat       = require('gulp-concat')
+const babel        = require('gulp-babel')
+const uglify       = require('gulp-uglify-es').default()
+const notify       = require('gulp-notify')
+const del          = require('del')
 
 // Build HTML & Pages
 const buildHtml = () => {
-    panini.refresh();
+    panini.refresh()
     return src('src/pages/*.html', { base: 'src/pages/' })
         .pipe(plumber())
         .pipe(panini({
@@ -52,7 +55,13 @@ const buildScripts = () => {
     ])
         .pipe(plumber())
         .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(concat('main.js'))
+        .pipe(uglify({
+            toplevel: true // !!!
+        }).on('error', notify.onError))
         .pipe(sourcemaps.write())
         .pipe(plumber.stop())
         .pipe(dest('dist/js/'))
@@ -90,12 +99,12 @@ const watcher = (done) => {
         server: { baseDir: ['./'] },
         notify: false,
         online: false,
-    });
-    watch('src/pages/**/*.html', buildHtml);
-    watch('src/scss/**/*.scss', buildStyles);
-    watch('src/js/*.js', buildScripts);
-    watch('src/fonts/**/*', buildFonts);
-    watch('src/images/**/*', buildImages);
+    })
+    watch('src/pages/**/*.html', buildHtml)
+    watch('src/scss/**/*.scss', buildStyles)
+    watch('src/js/*.js', buildScripts)
+    watch('src/fonts/**/*', buildFonts)
+    watch('src/images/**/*', buildImages)
     watch([
         './*.html',
         'dist/*.*',
@@ -103,14 +112,14 @@ const watcher = (done) => {
         'dist/fonts/**/*',
         'dist/images/**/*.*',
         'dist/js/*.js',
-    ]).on('change', browserSync.reload);
-    done();
+    ]).on('change', browserSync.reload)
+    done()
 }
 
-exports.buildHtml   = buildHtml;
-exports.buildStyles = buildStyles;
-exports.buildScipts = buildScripts;
-exports.buildFonts  = buildFonts;
-exports.buildImages = buildImages;
-exports.cleanBuild  = cleanBuild;
-exports.default = series(cleanBuild, parallel(buildHtml, buildStyles, buildScripts, buildFonts, buildImages), watcher);
+exports.buildHtml   = buildHtml
+exports.buildStyles = buildStyles
+exports.buildScipts = buildScripts
+exports.buildFonts  = buildFonts
+exports.buildImages = buildImages
+exports.cleanBuild  = cleanBuild
+exports.default = series(cleanBuild, parallel(buildHtml, buildStyles, buildScripts, buildFonts, buildImages), watcher)
