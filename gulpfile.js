@@ -6,6 +6,7 @@ const panini       = require('panini');
 const sourcemaps   = require('gulp-sourcemaps');
 const sass         = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
+const concat       = require('gulp-concat');
 const del          = require('del');
 
 // Build HTML & Pages
@@ -37,7 +38,7 @@ function buildStyles() {
             overrideBrowserslist: ['last 10 versions'],
             cascade: false
         }))
-        .pipe(sourcemaps.write()) // Comment prod
+        .pipe(sourcemaps.write())
         .pipe(plumber.stop())
         .pipe(dest('dist/css/'))
         .pipe(browserSync.stream())
@@ -50,6 +51,9 @@ function buildScripts() {
         'src/js/main.js',
     ])
         .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(concat('main.js'))
+        .pipe(sourcemaps.write())
         .pipe(plumber.stop())
         .pipe(dest('dist/js/'))
         .pipe(browserSync.stream())
