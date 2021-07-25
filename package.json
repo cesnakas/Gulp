@@ -1,0 +1,30 @@
+{
+    "name": "gulp",
+    "version": "1.0.0",
+    "description": "Gulp build",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cesnakas/GULP.git"
+    },
+    "author": "Sergei ★ Česnakas",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/cesnakas/GULP/issues"
+    },
+    "homepage": "https://github.com/cesnakas/GULP#readme",
+    "devDependencies": {
+        "browser-sync": "^2.27.4",
+        "del": "^6.0.0",
+        "gulp": "^4.0.2",
+        "gulp-autoprefixer": "^8.0.0",
+        "gulp-plumber": "^1.2.1",
+        "gulp-sass": "^5.0.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "panini": "^1.7.1",
+        "sass": "^1.36.0"
+    }
+}
