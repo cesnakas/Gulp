@@ -9,10 +9,12 @@ const autoprefixer = require('gulp-autoprefixer')
 const concat       = require('gulp-concat')
 const babel        = require('gulp-babel')
 const uglify       = require('gulp-uglify')
+const imagemin    = require('gulp-imagemin')
+const svgSprite    = require('gulp-svg-sprite')
 const del          = require('del')
 
 // Build HTML & Pages
-const buildHtml = () => {
+const htmlBuild = () => {
     panini.refresh()
     return src('src/pages/*.html', { base: 'src/pages/' })
         .pipe(plumber())
@@ -74,11 +76,24 @@ const buildFonts = () => {
 
 // Build a Images
 const buildImages = () => {
-    return src('src/images/**/*')
+    return src('src/images/**/*.{png,jpg,jpeg,gif,webp}')
         .pipe(plumber())
+        .pipe(imagemin())
         .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
         .pipe(browserSync.stream())
+}
+
+const svgBuild = () => {
+    return src('src/images/svg/**/*.svg')
+        .pipe(svgSprite({
+            mode: {
+                stack: {
+                    sprite: '../sprite.svg'
+                }
+            }
+        }))
+        .pipe(dest('dist/images/'))
 }
 
 // Clean a Build
@@ -97,11 +112,12 @@ const watcher = (done) => {
         notify: false,
         online: false,
     })
-    watch('src/pages/**/*.html', buildHtml)
+    watch('src/pages/**/*.html', htmlBuild)
     watch('src/scss/**/*.scss', buildStyles)
     watch('src/js/*.js', buildScripts)
     watch('src/fonts/**/*', buildFonts)
     watch('src/images/**/*', buildImages)
+    watch('src/images/svg/**/*.svg', svgBuild)
     watch([
         './*.html',
         'dist/*.*',
@@ -113,10 +129,11 @@ const watcher = (done) => {
     done()
 }
 
-exports.buildHtml   = buildHtml
+exports.htmlBuild   = htmlBuild
 exports.buildStyles = buildStyles
 exports.buildScipts = buildScripts
 exports.buildFonts  = buildFonts
 exports.buildImages = buildImages
+exports.svgBuild    = svgBuild
 exports.cleanBuild  = cleanBuild
-exports.default = series(cleanBuild, buildScripts, parallel(buildHtml, buildStyles, buildFonts, buildImages), watcher)
+exports.default = series(cleanBuild, buildScripts, parallel(htmlBuild, buildStyles, buildFonts, buildImages, svgBuild), watcher)
