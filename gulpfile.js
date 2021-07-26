@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const { src, dest, series, parallel, watch } = require('gulp')
 const browserSync  = require('browser-sync').create()
 const plumber      = require('gulp-plumber')
@@ -31,7 +31,7 @@ const htmlBuild = () => {
 }
 
 // Build a Styles
-const buildStyles = () => {
+const stylesBuild = () => {
     return src('src/scss/**/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -49,7 +49,7 @@ const buildStyles = () => {
 }
 
 // Build a Scripts
-const buildScripts = () => {
+const scriptsBuild = () => {
     return src([
         // 'node_modules/...',
         'src/js/main.js',
@@ -68,14 +68,14 @@ const buildScripts = () => {
 }
 
 // Build a Fonts
-const buildFonts = () => {
+const fontsBuild = () => {
     return src('src/fonts/**/*.*')
         .pipe(dest('dist/fonts/'))
         .pipe(browserSync.stream())
 }
 
 // Build a Images
-const buildImages = () => {
+const imagesBuild = () => {
     return src('src/images/**/*.{png,jpg,jpeg,gif,webp}')
         .pipe(plumber())
         .pipe(imagemin())
@@ -113,10 +113,10 @@ const watcher = (done) => {
         online: false,
     })
     watch('src/pages/**/*.html', htmlBuild)
-    watch('src/scss/**/*.scss', buildStyles)
-    watch('src/js/*.js', buildScripts)
-    watch('src/fonts/**/*', buildFonts)
-    watch('src/images/**/*', buildImages)
+    watch('src/scss/**/*.scss', stylesBuild)
+    watch('src/js/*.js', scriptsBuild)
+    watch('src/fonts/**/*', fontsBuild)
+    watch('src/images/**/*', imagesBuild)
     watch('src/images/svg/**/*.svg', svgBuild)
     watch([
         './*.html',
@@ -130,10 +130,10 @@ const watcher = (done) => {
 }
 
 exports.htmlBuild   = htmlBuild
-exports.buildStyles = buildStyles
-exports.buildScipts = buildScripts
-exports.buildFonts  = buildFonts
-exports.buildImages = buildImages
+exports.stylesBuild = stylesBuild
+exports.buildScipts = scriptsBuild
+exports.buildFonts  = fontsBuild
+exports.buildImages = imagesBuild
 exports.svgBuild    = svgBuild
 exports.cleanBuild  = cleanBuild
-exports.default = series(cleanBuild, buildScripts, parallel(htmlBuild, buildStyles, buildFonts, buildImages, svgBuild), watcher)
+exports.default = series(cleanBuild, scriptsBuild, htmlBuild, stylesBuild, fontsBuild, imagesBuild, svgBuild, watcher)
