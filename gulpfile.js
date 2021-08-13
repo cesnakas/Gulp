@@ -16,14 +16,14 @@ const del          = require('del')
 // Build HTML & Pages
 const htmlBuild = () => {
     panini.refresh()
-    return src('src/pages/*.html', { base: 'src/pages/' })
+    return src('app/pages/*.html', { base: 'app/pages/' })
         .pipe(plumber())
         .pipe(panini({
-            root:     'src/',
-            layouts:  'src/pages/layouts/',
-            partials: 'src/pages/partials/',
-            helpers:  'src/pages/helpers/',
-            data:     'src/pages/data/'
+            root:     'app/',
+            layouts:  'app/pages/layouts/',
+            partials: 'app/pages/partials/',
+            helpers:  'app/pages/helpers/',
+            data:     'app/pages/data/'
         }))
         .pipe(plumber.stop())
         .pipe(dest('./'))
@@ -32,7 +32,7 @@ const htmlBuild = () => {
 
 // Build a Styles
 const stylesBuild = () => {
-    return src('src/scss/**/*.scss')
+    return src('app/scss/**/*.scss')
         .pipe(plumber())
         .pipe(sourcemaps.init())
         .pipe(sass.sync({
@@ -52,7 +52,7 @@ const stylesBuild = () => {
 const scriptsBuild = () => {
     return src([
         // 'node_modules/...',
-        'src/js/main.js',
+        'app/js/main.js',
     ])
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -69,14 +69,14 @@ const scriptsBuild = () => {
 
 // Build a Fonts
 const fontsBuild = () => {
-    return src('src/fonts/**/*.*')
+    return src('app/fonts/**/*.*')
         .pipe(dest('dist/fonts/'))
         .pipe(browserSync.stream())
 }
 
 // Build a Images
 const imagesBuild = () => {
-    return src('src/images/**/*.{png,jpg,jpeg,gif,webp}')
+    return src('app/images/**/*.{png,jpg,jpeg,gif,webp}')
         .pipe(plumber())
         .pipe(imagemin())
         .pipe(plumber.stop())
@@ -85,14 +85,14 @@ const imagesBuild = () => {
 }
 
 const svgBuild = () => {
-    return src('src/images/svg/**/*.svg')
-        .pipe(svgSprite({
+    return src('app/images/**/*.svg')
+        /*.pipe(svgSprite({
             mode: {
                 stack: {
                     sprite: '../sprite.svg'
                 }
             }
-        }))
+        }))*/
         .pipe(dest('dist/images/'))
 }
 
@@ -112,12 +112,12 @@ const watcher = (done) => {
         notify: false,
         online: false,
     })
-    watch('src/pages/**/*.html', htmlBuild)
-    watch('src/scss/**/*.scss', stylesBuild)
-    watch('src/js/*.js', scriptsBuild)
-    watch('src/fonts/**/*', fontsBuild)
-    watch('src/images/**/*', imagesBuild)
-    watch('src/images/svg/**/*.svg', svgBuild)
+    watch('app/pages/**/*.html', htmlBuild)
+    watch('app/scss/**/*.scss', stylesBuild)
+    watch('app/js/*.js', scriptsBuild)
+    watch('app/fonts/**/*', fontsBuild)
+    watch('app/images/**/*', imagesBuild)
+    watch('app/images/**/*.svg', svgBuild)
     watch([
         './*.html',
         'dist/*.*',
