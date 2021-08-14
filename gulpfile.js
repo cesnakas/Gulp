@@ -11,7 +11,7 @@ const babel            = require('gulp-babel')
 const uglify           = require('gulp-uglify')
 const imagemin         = require('gulp-imagemin')
 const imageminPngquant = require('imagemin-pngquant')
-// const svgSprite        = require('gulp-svg-sprite')
+// const svgSprite     = require('gulp-svg-sprite')
 const del              = require('del')
 
 // Build HTML & Pages
@@ -89,18 +89,20 @@ const imagesBuild = () => {
         .pipe(browserSync.stream())
 }
 
+// Build a SVG
 const svgBuild = () => {
     return src('app/images/**/*.svg')
-        /*
         .pipe(imagemin([
+            imagemin.svgo()
+        ]))
+        /*.pipe(imagemin([
             imagemin.svgo({
                 plugins: [
                     {removeViewBox: true},
                     {cleanupIDs: false}
                 ]
             })
-        ]))
-        */
+        ]))*/
         .pipe(dest('dist/images/'))
 }
 
@@ -139,9 +141,9 @@ const watcher = (done) => {
 
 exports.htmlBuild   = htmlBuild
 exports.stylesBuild = stylesBuild
-exports.buildScipts = scriptsBuild
-exports.buildFonts  = fontsBuild
-exports.buildImages = imagesBuild
+exports.sciptsBuild = scriptsBuild
+exports.fontsBuild  = fontsBuild
+exports.imagesBuild = imagesBuild
 exports.svgBuild    = svgBuild
 exports.cleanBuild  = cleanBuild
 exports.default = series(cleanBuild, scriptsBuild, htmlBuild, stylesBuild, fontsBuild, imagesBuild, svgBuild, watcher)
