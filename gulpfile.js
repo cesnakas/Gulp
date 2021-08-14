@@ -1,5 +1,6 @@
 'use strict'
 const { src, dest, series, parallel, watch } = require('gulp')
+const gulp             = require('gulp');
 const browserSync      = require('browser-sync').create()
 const plumber          = require('gulp-plumber')
 const panini           = require('panini')
@@ -12,6 +13,7 @@ const uglify           = require('gulp-uglify')
 const imagemin         = require('gulp-imagemin')
 const imageminWebp     = require('imagemin-webp');
 const webp             = require('gulp-webp');
+const cache            = require('gulp-cache');
 const del              = require('del')
 
 // Build HTML & Pages
@@ -35,7 +37,7 @@ const htmlBuild = () => {
 const stylesBuild = () => {
     return src('app/scss/**/*.scss')
         .pipe(plumber())
-        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init()) // dev
         .pipe(sass.sync({
             outputStyle: 'compressed'
         }).on('error', sass.logError))
@@ -43,7 +45,7 @@ const stylesBuild = () => {
             overrideBrowserslist: ['last 10 versions'],
             cascade: false
         }))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write()) // dev
         .pipe(plumber.stop())
         .pipe(dest('dist/css/'))
         .pipe(browserSync.stream())
@@ -56,13 +58,13 @@ const scriptsBuild = () => {
         'app/js/main.js',
     ])
         .pipe(plumber())
-        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init()) // Dev
         .pipe(babel({
             presets: ['@babel/env']
         }))
         .pipe(concat('main.js'))
         .pipe(uglify())
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write()) // Dev
         .pipe(plumber.stop())
         .pipe(dest('dist/js/'))
         .pipe(browserSync.stream())
@@ -78,13 +80,13 @@ const fontsBuild = () => {
 // Build a Images
 const imagesBuild = () => {
     return src('app/images/**/*.{png,jpg,jpeg,gif}')
-        .pipe(plumber())
-        .pipe(imagemin([
+        // .pipe(plumber())
+        .pipe(cache(imagemin([
             imagemin.optipng({optimizationLevel: 5}),
             imagemin.mozjpeg({quality: 75, progressive: true}),
             imagemin.gifsicle({interlaced: true}),
-        ]))
-        .pipe(plumber.stop())
+        ])))
+        // .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
         .pipe(browserSync.stream())
 }
@@ -93,8 +95,8 @@ const imagesBuild = () => {
 // https://github.com/svg/svgo#built-in-plugins
 const svgBuild = () => {
     return src('app/images/**/*.svg')
-        .pipe(plumber())
-        .pipe(imagemin([
+        // .pipe(plumber())
+        .pipe(cache(imagemin([
             imagemin.svgo({
                 plugins: [
                     {removeViewBox: false},
@@ -103,18 +105,20 @@ const svgBuild = () => {
                     {removeDimensions: true}
                 ]
             })
-        ]))
-        .pipe(plumber.stop())
+        ])))
+        // .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
 }
 
 // Build a WEBP
 const webpBuild = () => {
     return src('app/images/**/*.{jpg,jpeg,png}')
-        .pipe(plumber())
-        .pipe(webp())
-        .pipe(plumber.stop())
+        // .pipe(plumber())
+        .pipe(cache(webp()))
+        // .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
 }
 
 // Clean a Build
@@ -125,6 +129,11 @@ const cleanBuild = () => {
         './dist'
     ])
 }
+
+// Clear Cache
+gulp.task('clear', () =>
+    cache.clearAll()
+);
 
 // Watch
 const watcher = (done) => {
@@ -159,3 +168,4 @@ exports.svgBuild    = svgBuild
 exports.webpBuild   = webpBuild
 exports.cleanBuild  = cleanBuild
 exports.default = series(cleanBuild, scriptsBuild, htmlBuild, stylesBuild, fontsBuild, imagesBuild, svgBuild, watcher)
+exports.dev = series(cleanBuild, parallel(htmlBuild, stylesBuild, scriptsBuild, fontsBuild, imagesBuild, svgBuild), watcher)
