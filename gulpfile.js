@@ -11,6 +11,7 @@ const babel            = require('gulp-babel')
 const uglify           = require('gulp-uglify')
 const imagemin         = require('gulp-imagemin')
 const imageminWebp     = require('imagemin-webp');
+const webp             = require('gulp-webp');
 const del              = require('del')
 
 // Build HTML & Pages
@@ -76,7 +77,7 @@ const fontsBuild = () => {
 
 // Build a Images
 const imagesBuild = () => {
-    return src('app/images/**/*.{png,jpg,jpeg,gif,webp}')
+    return src('app/images/**/*.{png,jpg,jpeg,gif}')
         .pipe(plumber())
         .pipe(imagemin([
             imagemin.optipng({optimizationLevel: 5}),
@@ -92,6 +93,7 @@ const imagesBuild = () => {
 // https://github.com/svg/svgo#built-in-plugins
 const svgBuild = () => {
     return src('app/images/**/*.svg')
+        .pipe(plumber())
         .pipe(imagemin([
             imagemin.svgo({
                 plugins: [
@@ -102,6 +104,16 @@ const svgBuild = () => {
                 ]
             })
         ]))
+        .pipe(plumber.stop())
+        .pipe(dest('dist/images/'))
+}
+
+// Build a WEBP
+const webpBuild = () => {
+    return src('app/images/**/*.{jpg,jpeg,png}')
+        .pipe(plumber())
+        .pipe(webp())
+        .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
 }
 
@@ -144,5 +156,6 @@ exports.sciptsBuild = scriptsBuild
 exports.fontsBuild  = fontsBuild
 exports.imagesBuild = imagesBuild
 exports.svgBuild    = svgBuild
+exports.webpBuild   = webpBuild
 exports.cleanBuild  = cleanBuild
 exports.default = series(cleanBuild, scriptsBuild, htmlBuild, stylesBuild, fontsBuild, imagesBuild, svgBuild, watcher)
