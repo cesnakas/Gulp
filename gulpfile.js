@@ -90,19 +90,19 @@ const imagesBuild = () => {
 }
 
 // Build a SVG
+// https://github.com/svg/svgo#built-in-plugins
 const svgBuild = () => {
     return src('app/images/**/*.svg')
         .pipe(imagemin([
-            imagemin.svgo()
-        ]))
-        /*.pipe(imagemin([
             imagemin.svgo({
                 plugins: [
-                    {removeViewBox: true},
-                    {cleanupIDs: false}
+                    {removeViewBox: false},
+                    {cleanupIDs: true},
+                    {removeRasterImages: true},
+                    {removeDimensions: true}
                 ]
             })
-        ]))*/
+        ]))
         .pipe(dest('dist/images/'))
 }
 
