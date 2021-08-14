@@ -1,17 +1,18 @@
 'use strict'
 const { src, dest, series, parallel, watch } = require('gulp')
-const browserSync  = require('browser-sync').create()
-const plumber      = require('gulp-plumber')
-const panini       = require('panini')
-const sourcemaps   = require('gulp-sourcemaps')
-const sass         = require('gulp-sass')(require('sass'))
-const autoprefixer = require('gulp-autoprefixer')
-const concat       = require('gulp-concat')
-const babel        = require('gulp-babel')
-const uglify       = require('gulp-uglify')
-const imagemin     = require('gulp-imagemin')
-const svgSprite    = require('gulp-svg-sprite')
-const del          = require('del')
+const browserSync      = require('browser-sync').create()
+const plumber          = require('gulp-plumber')
+const panini           = require('panini')
+const sourcemaps       = require('gulp-sourcemaps')
+const sass             = require('gulp-sass')(require('sass'))
+const autoprefixer     = require('gulp-autoprefixer')
+const concat           = require('gulp-concat')
+const babel            = require('gulp-babel')
+const uglify           = require('gulp-uglify')
+const imagemin         = require('gulp-imagemin')
+const imageminPngquant = require('imagemin-pngquant')
+const svgSprite        = require('gulp-svg-sprite')
+const del              = require('del')
 
 // Build HTML & Pages
 const htmlBuild = () => {
@@ -78,7 +79,11 @@ const fontsBuild = () => {
 const imagesBuild = () => {
     return src('app/images/**/*.{png,jpg,jpeg,gif,webp}')
         .pipe(plumber())
-        .pipe(imagemin())
+        .pipe(imagemin([
+            imagemin.optipng({optimizationLevel: 5}),
+            imagemin.mozjpeg({quality: 75, progressive: true}),
+            imagemin.gifsicle({interlaced: true}),
+        ]))
         .pipe(plumber.stop())
         .pipe(dest('dist/images/'))
         .pipe(browserSync.stream())
