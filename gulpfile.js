@@ -11,7 +11,7 @@ const babel            = require('gulp-babel')
 const uglify           = require('gulp-uglify')
 const imagemin         = require('gulp-imagemin')
 const imageminPngquant = require('imagemin-pngquant')
-const svgSprite        = require('gulp-svg-sprite')
+// const svgSprite        = require('gulp-svg-sprite')
 const del              = require('del')
 
 // Build HTML & Pages
@@ -91,13 +91,16 @@ const imagesBuild = () => {
 
 const svgBuild = () => {
     return src('app/images/**/*.svg')
-        /*.pipe(svgSprite({
-            mode: {
-                stack: {
-                    sprite: '../sprite.svg'
-                }
-            }
-        }))*/
+        /*
+        .pipe(imagemin([
+            imagemin.svgo({
+                plugins: [
+                    {removeViewBox: true},
+                    {cleanupIDs: false}
+                ]
+            })
+        ]))
+        */
         .pipe(dest('dist/images/'))
 }
 
