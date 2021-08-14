@@ -1,6 +1,6 @@
 {
     "name": "gulp",
-    "version": "1.1.0",
+    "version": "1.1.2",
     "description": "Gulp build",
     "main": "index.js",
     "scripts": {
@@ -31,9 +31,8 @@
         "gulp-plumber": "^1.2.1",
         "gulp-sass": "^5.0.0",
         "gulp-sourcemaps": "^3.0.0",
-        "gulp-svg-sprite": "^1.5.0",
         "gulp-uglify": "^3.0.2",
-        "imagemin-pngquant": "^9.0.2",
+        "imagemin-webp": "^6.0.0",
         "panini": "^1.7.1",
         "sass": "^1.37.5"
     }

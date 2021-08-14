@@ -10,8 +10,7 @@ const concat           = require('gulp-concat')
 const babel            = require('gulp-babel')
 const uglify           = require('gulp-uglify')
 const imagemin         = require('gulp-imagemin')
-const imageminPngquant = require('imagemin-pngquant')
-// const svgSprite     = require('gulp-svg-sprite')
+const imageminWebp     = require('imagemin-webp');
 const del              = require('del')
 
 // Build HTML & Pages
