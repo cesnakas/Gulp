@@ -1,23 +1,25 @@
 'use strict'
 const { src, dest, series, parallel, watch } = require('gulp')
-const gulp             = require('gulp');
-const browserSync      = require('browser-sync').create()
-const plumber          = require('gulp-plumber')
-const panini           = require('panini')
-const sourcemaps       = require('gulp-sourcemaps')
-const sass             = require('gulp-sass')(require('sass'))
-const autoprefixer     = require('gulp-autoprefixer')
-const concat           = require('gulp-concat')
-const babel            = require('gulp-babel')
-const uglify           = require('gulp-uglify')
-const imagemin         = require('gulp-imagemin')
-const imageminWebp     = require('imagemin-webp');
-const webp             = require('gulp-webp');
-const cache            = require('gulp-cache');
-const del              = require('del')
+const gulp         = require('gulp');
+const browserSync  = require('browser-sync').create()
+const plumber      = require('gulp-plumber')
+const panini       = require('panini')
+const sourcemaps   = require('gulp-sourcemaps')
+const sass         = require('gulp-sass')(require('sass'))
+const autoprefixer = require('gulp-autoprefixer')
+const concat       = require('gulp-concat')
+const babel        = require('gulp-babel')
+const uglify       = require('gulp-uglify')
+const imagemin     = require('gulp-imagemin')
+const imageminWebp = require('imagemin-webp')
+const WEBP         = require('gulp-webp')
+const cache        = require('gulp-cache')
+const del          = require('del')
+const mode         = require('gulp-mode')({modes: ['prod', 'dev'], default: 'dev', verbose: false})
 
-// Build HTML & Pages
-const htmlBuild = () => {
+
+// ========== HTML ==========
+const html = () => {
     panini.refresh()
     return src('app/pages/*.html', { base: 'app/pages/' })
         .pipe(plumber())
@@ -32,12 +34,14 @@ const htmlBuild = () => {
         .pipe(dest('./'))
         .pipe(browserSync.stream())
 }
+// ========== /HTML ==========
 
-// Build a Styles
-const stylesBuild = () => {
+
+// ========== Styles ==========
+const styles = () => {
     return src('app/scss/**/*.scss')
         .pipe(plumber())
-        .pipe(sourcemaps.init()) // dev
+        .pipe(mode.dev(sourcemaps.init()))
         .pipe(sass.sync({
             outputStyle: 'compressed'
         }).on('error', sass.logError))
@@ -45,84 +49,80 @@ const stylesBuild = () => {
             overrideBrowserslist: ['last 10 versions'],
             cascade: false
         }))
-        .pipe(sourcemaps.write()) // dev
+        .pipe(mode.dev(sourcemaps.write()))
         .pipe(plumber.stop())
         .pipe(dest('dist/css/'))
         .pipe(browserSync.stream())
 }
+// ========== /Styles ==========
 
-// Build a Scripts
-const scriptsBuild = () => {
+
+// ========== Scripts ==========
+const scripts = () => {
     return src([
         // 'node_modules/...',
         'app/js/main.js',
     ])
         .pipe(plumber())
-        .pipe(sourcemaps.init()) // Dev
+        .pipe(mode.dev(sourcemaps.init()))
         .pipe(babel({
             presets: ['@babel/env']
         }))
         .pipe(concat('main.js'))
         .pipe(uglify())
-        .pipe(sourcemaps.write()) // Dev
+        .pipe(mode.dev(sourcemaps.write()))
         .pipe(plumber.stop())
         .pipe(dest('dist/js/'))
         .pipe(browserSync.stream())
 }
+// ========== /Scripts ==========
 
-// Build a Fonts
-const fontsBuild = () => {
+
+// ========== Images ==========
+const images = () => {
+    return src('app/images/**/*.{png,jpg,jpeg,gif}')
+        .pipe(cache(imagemin([
+            imagemin.optipng({ optimizationLevel: 5 }),
+            imagemin.mozjpeg({ quality: 75, progressive: true }),
+            imagemin.gifsicle({ interlaced: true }),
+        ])))
+        .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
+}
+// https://github.com/svg/svgo#built-in-plugins
+const svg = () => {
+    return src('app/images/**/*.svg')
+        .pipe(cache(imagemin([
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: false },
+                    { cleanupIDs: true },
+                    { removeRasterImages: true },
+                    { removeDimensions: true }
+                ]
+            })
+        ])))
+        .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
+}
+const webp = () => {
+    return src('app/images/**/*.{jpg,jpeg,png}')
+        .pipe(cache(WEBP()))
+        .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
+}
+// ========== /Images ==========
+
+
+// ========== Fonts ==========
+const fonts = () => {
     return src('app/fonts/**/*.*')
         .pipe(dest('dist/fonts/'))
         .pipe(browserSync.stream())
 }
 
-// Build a Images
-const imagesBuild = () => {
-    return src('app/images/**/*.{png,jpg,jpeg,gif}')
-        // .pipe(plumber())
-        .pipe(cache(imagemin([
-            imagemin.optipng({optimizationLevel: 5}),
-            imagemin.mozjpeg({quality: 75, progressive: true}),
-            imagemin.gifsicle({interlaced: true}),
-        ])))
-        // .pipe(plumber.stop())
-        .pipe(dest('dist/images/'))
-        .pipe(browserSync.stream())
-}
-
-// Build a SVG
-// https://github.com/svg/svgo#built-in-plugins
-const svgBuild = () => {
-    return src('app/images/**/*.svg')
-        // .pipe(plumber())
-        .pipe(cache(imagemin([
-            imagemin.svgo({
-                plugins: [
-                    {removeViewBox: false},
-                    {cleanupIDs: true},
-                    {removeRasterImages: true},
-                    {removeDimensions: true}
-                ]
-            })
-        ])))
-        // .pipe(plumber.stop())
-        .pipe(dest('dist/images/'))
-        .pipe(browserSync.stream())
-}
-
-// Build a WEBP
-const webpBuild = () => {
-    return src('app/images/**/*.{jpg,jpeg,png}')
-        // .pipe(plumber())
-        .pipe(cache(webp()))
-        // .pipe(plumber.stop())
-        .pipe(dest('dist/images/'))
-        .pipe(browserSync.stream())
-}
-
-// Clean a Build
-const cleanBuild = () => {
+// ========== Clean Build ==========
+const clean = () => {
     return del([
         './*.html',
         './dist/*',
@@ -130,42 +130,37 @@ const cleanBuild = () => {
     ])
 }
 
-// Clear Cache
+// ========== Clear Cache ==========
 gulp.task('clear', () =>
     cache.clearAll()
-);
+)
 
-// Watch
-const watcher = (done) => {
+// ========== BrowserSync ==========
+const watchFiles = () => {
     browserSync.init({
-        server: { baseDir: ['./'] },
+        server: { baseDir: './' },
         notify: false,
         online: false,
     })
-    watch('app/pages/**/*.html', htmlBuild)
-    watch('app/scss/**/*.scss', stylesBuild)
-    watch('app/js/*.js', scriptsBuild)
-    watch('app/fonts/**/*', fontsBuild)
-    watch('app/images/**/*', imagesBuild)
-    watch('app/images/**/*.svg', svgBuild)
-    watch([
-        './*.html',
-        'dist/*.*',
-        'dist/css/*.css',
-        'dist/fonts/**/*',
-        'dist/images/**/*.*',
-        'dist/js/*.js',
-    ]).on('change', browserSync.reload)
-    done()
 }
 
-exports.htmlBuild   = htmlBuild
-exports.stylesBuild = stylesBuild
-exports.sciptsBuild = scriptsBuild
-exports.fontsBuild  = fontsBuild
-exports.imagesBuild = imagesBuild
-exports.svgBuild    = svgBuild
-exports.webpBuild   = webpBuild
-exports.cleanBuild  = cleanBuild
-exports.default = series(cleanBuild, scriptsBuild, htmlBuild, stylesBuild, fontsBuild, imagesBuild, svgBuild, watcher)
-exports.dev = series(cleanBuild, parallel(htmlBuild, stylesBuild, scriptsBuild, fontsBuild, imagesBuild, svgBuild), watcher)
+// ========== Watch ==========
+watch('app/pages/**/*.html', html)
+watch('app/scss/**/*.scss', styles)
+watch('app/js/*.js', scripts)
+watch('app/fonts/**/*', fonts)
+watch('app/images/**/*', images)
+watch('app/images/**/*.svg', svg)
+watch('app/images/**/*.webp', webp)
+
+// ========== Exports ==========
+exports.styles = styles
+exports.scipts = scripts
+exports.html   = html
+exports.fonts  = fonts
+exports.images = images
+exports.svg    = svg
+exports.webp   = webp
+exports.clean  = clean
+
+exports.default = series(clean, parallel(html, styles, scripts, fonts, images, svg), watchFiles)
