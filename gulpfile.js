@@ -31,11 +31,9 @@ const html = () => {
             data:     'app/pages/data/'
         }))
         .pipe(plumber.stop())
-        .pipe(dest('./'))
+        .pipe(dest('dist/'))
         .pipe(browserSync.stream())
 }
-// ========== /HTML ==========
-
 
 // ========== Styles ==========
 const styles = () => {
@@ -54,8 +52,6 @@ const styles = () => {
         .pipe(dest('dist/css/'))
         .pipe(browserSync.stream())
 }
-// ========== /Styles ==========
-
 
 // ========== Scripts ==========
 const scripts = () => {
@@ -75,8 +71,6 @@ const scripts = () => {
         .pipe(dest('dist/js/'))
         .pipe(browserSync.stream())
 }
-// ========== /Scripts ==========
-
 
 // ========== Images ==========
 const images = () => {
@@ -111,8 +105,6 @@ const webp = () => {
         .pipe(dest('dist/images/'))
         .pipe(browserSync.stream())
 }
-// ========== /Images ==========
-
 
 // ========== Fonts ==========
 const fonts = () => {
@@ -138,7 +130,7 @@ gulp.task('clear', () =>
 // ========== BrowserSync ==========
 const watchFiles = () => {
     browserSync.init({
-        server: { baseDir: './' },
+        server: { baseDir: ['dist/', './'] },
         notify: false,
         online: false,
     })
