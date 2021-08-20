@@ -16,6 +16,12 @@ const WEBP         = require('gulp-webp')
 const cache        = require('gulp-cache')
 const del          = require('del')
 const mode         = require('gulp-mode')({modes: ['prod', 'dev'], default: 'dev', verbose: false})
+//
+const sitemap = require('gulp-sitemap')
+const svgstore = require('gulp-svgstore')
+const webpack = require('webpack-stream')
+const svgSymbols = require('gulp-svg-symbols')
+//
 
 
 // ========== HTML ==========
