@@ -11,16 +11,16 @@ const concat       = require('gulp-concat')
 const babel        = require('gulp-babel')
 const uglify       = require('gulp-uglify')
 const imagemin     = require('gulp-imagemin')
+const svgSymbols   = require('gulp-svg-symbols')
 const imageminWebp = require('imagemin-webp')
 const WEBP         = require('gulp-webp')
 const cache        = require('gulp-cache')
 const del          = require('del')
 const SITEMAP      = require('gulp-sitemap')
 const mode         = require('gulp-mode')({modes: ['prod', 'dev'], default: 'dev', verbose: false})
+const path         = require('path')
 //
-const svgstore = require('gulp-svgstore')
 const webpack = require('webpack-stream')
-const svgSymbols = require('gulp-svg-symbols')
 //
 
 
@@ -91,7 +91,7 @@ const images = () => {
 }
 // https://github.com/svg/svgo#built-in-plugins
 const svg = () => {
-    return src('app/images/**/*.svg')
+    return src('app/images/*.svg','!app/images/svg/*')
         .pipe(cache(imagemin([
             imagemin.svgo({
                 plugins: [
@@ -102,6 +102,25 @@ const svg = () => {
                 ]
             })
         ])))
+        .pipe(dest('dist/images/'))
+        .pipe(browserSync.stream())
+}
+const sprite = () => {
+    return src('app/images/svg/**/*.svg')
+        .pipe(imagemin([
+            imagemin.svgo({
+                plugins: [
+                    { removeViewBox: false },
+                    { cleanupIDs: true },
+                    { removeRasterImages: true },
+                    { removeDimensions: true }
+                ]
+            })
+        ]))
+        .pipe(svgSymbols({
+            id: '%f',
+            templates: ['default-svg']
+        }))
         .pipe(dest('dist/images/'))
         .pipe(browserSync.stream())
 }
@@ -132,18 +151,14 @@ const sitemap = () => {
 }
 
 // ========== Clean Build ==========
-const clean = () => {
-    return del([
+const clean = (cb) => {
+    del([
         './*.html',
         './dist/*',
         './dist'
     ])
+    return cache.clearAll(cb)
 }
-
-// ========== Clear Cache ==========
-gulp.task('clear', () =>
-    cache.clearAll()
-)
 
 // ========== BrowserSync ==========
 const watchFiles = () => {
@@ -161,17 +176,19 @@ watch('app/js/*.js', scripts)
 watch('app/fonts/**/*', fonts)
 watch('app/images/**/*', images)
 watch('app/images/**/*.svg', svg)
+watch('app/images/svg/*.svg', sprite)
 watch('app/images/**/*.webp', webp)
 
 // ========== Exports ==========
-exports.styles = styles
-exports.scipts = scripts
-exports.html   = html
-exports.fonts  = fonts
-exports.images = images
-exports.svg    = svg
-exports.webp   = webp
+exports.styles  = styles
+exports.scipts  = scripts
+exports.html    = html
+exports.fonts   = fonts
+exports.images  = images
+exports.svg     = svg
+exports.sprite  = sprite
+exports.webp    = webp
 exports.sitemap = sitemap
-exports.clean  = clean
+exports.clean   = clean
 
-exports.default = series(clean, parallel(html, styles, scripts, fonts, images, svg), watchFiles)
+exports.default = series(clean, parallel(html, styles, scripts, fonts, images, svg, sprite), watchFiles)

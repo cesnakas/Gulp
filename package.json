@@ -35,7 +35,6 @@
         "gulp-sitemap": "^8.0.0",
         "gulp-sourcemaps": "^3.0.0",
         "gulp-svg-symbols": "^3.2.3",
-        "gulp-svgstore": "^8.0.0",
         "gulp-uglify": "^3.0.2",
         "gulp-webp": "^4.0.1",
         "imagemin-webp": "^6.0.0",
