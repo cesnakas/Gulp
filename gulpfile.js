@@ -106,8 +106,8 @@ const svg = () => {
         .pipe(browserSync.stream())
 }
 const sprite = () => {
-    return src('app/images/svg/**/*.svg')
-        .pipe(imagemin([
+    return src('app/images/svg/*.svg')
+        .pipe(cache(imagemin([
             imagemin.svgo({
                 plugins: [
                     { removeViewBox: false },
@@ -116,7 +116,7 @@ const sprite = () => {
                     { removeDimensions: true }
                 ]
             })
-        ]))
+        ])))
         .pipe(svgSymbols({
             id: '%f',
             templates: ['default-svg']
@@ -174,7 +174,7 @@ watch('app/pages/**/*.html', html)
 watch('app/scss/**/*.scss', styles)
 watch('app/js/*.js', scripts)
 watch('app/fonts/**/*', fonts)
-watch('app/images/**/*', images)
+watch('app/images/**/*.{png,jpg,jpeg,gif}', images)
 watch('app/images/**/*.svg', svg)
 watch('app/images/svg/*.svg', sprite)
 watch('app/images/**/*.webp', webp)
