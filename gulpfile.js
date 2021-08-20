@@ -15,9 +15,9 @@ const imageminWebp = require('imagemin-webp')
 const WEBP         = require('gulp-webp')
 const cache        = require('gulp-cache')
 const del          = require('del')
+const SITEMAP      = require('gulp-sitemap')
 const mode         = require('gulp-mode')({modes: ['prod', 'dev'], default: 'dev', verbose: false})
 //
-const sitemap = require('gulp-sitemap')
 const svgstore = require('gulp-svgstore')
 const webpack = require('webpack-stream')
 const svgSymbols = require('gulp-svg-symbols')
@@ -119,6 +119,18 @@ const fonts = () => {
         .pipe(browserSync.stream())
 }
 
+// ========== Sitemap ==========
+const sitemap = () => {
+    return src('dist/*.html', {
+        read: false
+    })
+        .pipe(SITEMAP({
+            siteUrl: 'www.example.com',
+            changefreq: 'weekly'
+        }))
+        .pipe(dest('dist'))
+}
+
 // ========== Clean Build ==========
 const clean = () => {
     return del([
@@ -159,6 +171,7 @@ exports.fonts  = fonts
 exports.images = images
 exports.svg    = svg
 exports.webp   = webp
+exports.sitemap = sitemap
 exports.clean  = clean
 
 exports.default = series(clean, parallel(html, styles, scripts, fonts, images, svg), watchFiles)
