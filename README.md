@@ -1,10 +1,8 @@
 # GULP
-
-Building
+🥤 Building Gulp + 📦 Foundation
 
 ## Usage
-
-run `gulp` === `gulp --dev`
+run `gulp` = `gulp --dev`
 
 ###### Development:
 ```
