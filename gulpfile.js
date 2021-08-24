@@ -106,7 +106,7 @@ const svg = () => {
         .pipe(browserSync.stream())
 }
 const sprite = () => {
-    return src('app/images/svg/*.svg')
+    return src('app/images/symbols/*.svg')
         .pipe(cache(imagemin([
             imagemin.svgo({
                 plugins: [
@@ -176,7 +176,7 @@ watch('app/js/*.js', scripts)
 watch('app/fonts/**/*', fonts)
 watch('app/images/**/*.{png,jpg,jpeg,gif}', images)
 watch('app/images/**/*.svg', svg)
-watch('app/images/svg/*.svg', sprite)
+watch('app/images/symbols/*.svg', sprite)
 watch('app/images/**/*.webp', webp)
 
 // ========== Exports ==========
