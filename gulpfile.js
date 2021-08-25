@@ -170,9 +170,9 @@ const watchFiles = () => {
 }
 
 // ========== Watch ==========
-watch('app/pages/**/*.html', html)
-watch('app/scss/**/*.scss', styles)
-watch('app/js/*.js', scripts)
+watch(['app/pages/**/*.html','dist/*.html'], html)
+watch(['app/scss/**/*.scss','dist/css/**/*'], styles)
+watch(['app/js/*.js','dist/js/**/*'], scripts)
 watch('app/fonts/**/*', fonts)
 watch('app/images/**/*.{png,jpg,jpeg,gif}', images)
 watch('app/images/**/*.svg', svg)
