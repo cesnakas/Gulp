@@ -52,6 +52,11 @@ const paths = {
         src: 'app/images/svg/*.svg',
         dest: 'dist/images/',
         watch: 'app/images/svg/*.svg'
+    },
+    fonts: {
+        src: 'app/fonts/**/*',
+        dest: 'dist/fonts/',
+        watch: 'app/fonts/**/*'
     }
 }
 
@@ -143,6 +148,13 @@ function symbols() {
         .pipe(browserSync.stream())
 }
 
+// fonts
+function fonts() {
+    return gulp.src(paths.fonts.src)
+        .pipe(dest(paths.fonts.dest))
+        .pipe(browserSync.stream())
+}
+
 // panini
 function resetPages(done) {
     panini.refresh()
@@ -171,7 +183,7 @@ function watch(done) {
     done()
 }
 
-const build = gulp.series(clean, images, symbols, gulp.parallel(html, styles, scripts), watch)
+const build = gulp.series(clean, images, symbols, fonts, gulp.parallel(html, styles, scripts), watch)
 
 // Exports
 exports.clean = clean
@@ -180,6 +192,7 @@ exports.styles = styles
 exports.scripts = scripts
 exports.images = images
 exports.symbols = symbols
+exports.fonts = fonts
 exports.build = build
 
 exports.default = build
