@@ -33,7 +33,6 @@ const paths = {
     scripts: {
         src: [
             // 'node_modules/...',
-            'node_modules/jquery/dist/jquery.js',
             'app/scripts/main.js'
         ],
         dest: 'dist/js/',
