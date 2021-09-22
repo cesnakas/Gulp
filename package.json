@@ -1,6 +1,6 @@
 {
 	"name": "GULP",
-	"version": "1.2.0",
+	"version": "1.2.2",
 	"description": "Gulp",
 	"main": "gulpfile.js",
 	"scripts": {
@@ -8,14 +8,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/cesnakas/gulp.test.git"
+		"url": "git+https://github.com/cesnakas/gulp.git"
 	},
 	"author": "Sergei Česnakas",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/cesnakas/gulp.test/issues"
+		"url": "https://github.com/cesnakas/gulp/issues"
 	},
-	"homepage": "https://github.com/cesnakas/gulp.test#readme",
+	"homepage": "https://github.com/cesnakas/gulp#readme",
 	"devDependencies": {
 		"@babel/core": "^7.15.5",
 		"@babel/preset-env": "^7.15.6",
