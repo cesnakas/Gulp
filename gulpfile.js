@@ -64,6 +64,7 @@ const paths = {
 function clean() {
     return del(['dist'])
 }
+exports.clean = clean
 
 // gulp html
 function html() {
@@ -77,6 +78,13 @@ function html() {
         }))
         .pipe(dest(paths.html.dest))
         .pipe(browserSync.stream())
+}
+exports.html = html
+
+// panini
+function resetPages(done) {
+    panini.refresh()
+    done()
 }
 
 // gulp styles
@@ -93,6 +101,7 @@ function styles() {
         .pipe(mode.dev(sourcemaps.write()))
         .pipe(dest(paths.styles.dest))
 }
+exports.styles = styles
 
 // gulp scripts
 function scripts() {
@@ -106,6 +115,7 @@ function scripts() {
         .pipe(mode.dev(sourcemaps.write()))
         .pipe(dest(paths.scripts.dest))
 }
+exports.scripts = scripts
 
 // images
 function images() {
@@ -126,6 +136,7 @@ function images() {
         .pipe(dest(paths.images.dest))
         .pipe(browserSync.stream())
 }
+exports.images = images
 
 // svg symbols
 function symbols() {
@@ -147,6 +158,7 @@ function symbols() {
         .pipe(dest(paths.symbols.dest))
         .pipe(browserSync.stream())
 }
+exports.symbols = symbols
 
 // fonts
 function fonts() {
@@ -154,12 +166,7 @@ function fonts() {
         .pipe(dest(paths.fonts.dest))
         .pipe(browserSync.stream())
 }
-
-// panini
-function resetPages(done) {
-    panini.refresh()
-    done()
-}
+exports.fonts = fonts
 
 // watch
 function watch(done) {
@@ -186,13 +193,5 @@ function watch(done) {
 const build = gulp.series(clean, images, symbols, fonts, gulp.parallel(html, styles, scripts), watch)
 
 // Exports
-exports.clean = clean
-exports.html = html
-exports.styles = styles
-exports.scripts = scripts
-exports.images = images
-exports.symbols = symbols
-exports.fonts = fonts
 exports.build = build
-
 exports.default = build
