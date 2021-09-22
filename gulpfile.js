@@ -20,7 +20,7 @@ const mode = require('gulp-mode')({modes: ['prod', 'dev'], default: 'dev', verbo
 const browserSync = require('browser-sync').create()
 
 /**
- * Paths
+ * ### Paths ###
  */
 const paths = {
     html: {
@@ -59,8 +59,7 @@ const paths = {
 }
 
 /**
- * Clean
- *
+ * ### CLEAN ###
  * Clean & delete 'dist' directory
  */
 function clean() {
@@ -68,7 +67,10 @@ function clean() {
 }
 exports.clean = clean
 
-// gulp html
+/**
+ * ### HTML ###
+ * Building HTML using Panini
+ */
 function html() {
     return gulp.src(paths.html.src)
         .pipe(panini({
@@ -83,7 +85,7 @@ function html() {
 }
 exports.html = html
 
-// panini
+// Panini refresh
 function resetPages(done) {
     panini.refresh()
     done()
@@ -162,6 +164,13 @@ function symbols() {
 }
 exports.symbols = symbols
 
+// Clean Cache
+function cleanCache(done) {
+    cache.clearAll()
+    done()
+}
+exports.cleanCache = cleanCache
+
 // fonts
 function fonts() {
     return gulp.src(paths.fonts.src)
@@ -193,8 +202,7 @@ function watch(done) {
     done()
 }
 
-const build = gulp.series(clean, images, symbols, fonts, gulp.parallel(html, styles, scripts), watch)
-
 // Exports
+const build = gulp.series(clean, images, symbols, fonts, gulp.parallel(html, styles, scripts), watch)
 exports.build = build
 exports.default = build
