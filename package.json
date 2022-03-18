@@ -1,6 +1,6 @@
 {
 	"name": "GULP",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "Gulp",
 	"main": "gulpfile.js",
 	"scripts": {
@@ -17,10 +17,10 @@
 	},
 	"homepage": "https://github.com/cesnakas/gulp#readme",
 	"devDependencies": {
-		"@babel/core": "^7.15.5",
-		"@babel/preset-env": "^7.15.6",
-		"@babel/register": "^7.15.3",
-		"browser-sync": "^2.27.5",
+		"@babel/core": "^7.17.7",
+		"@babel/preset-env": "^7.16.11",
+		"@babel/register": "^7.17.7",
+		"browser-sync": "^2.27.9",
 		"del": "^6.0.0",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^8.0.0",
@@ -29,12 +29,12 @@
 		"gulp-concat": "^2.6.1",
 		"gulp-imagemin": "^7.1.0",
 		"gulp-mode": "^1.1.0",
-		"gulp-sass": "^5.0.0",
+		"gulp-sass": "^5.1.0",
 		"gulp-sass-glob": "^1.1.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-svg-symbols": "^3.2.3",
 		"gulp-uglify": "^3.0.2",
 		"panini": "^1.7.2",
-		"sass": "^1.42.1"
+		"sass": "^1.49.9"
 	}
 }
