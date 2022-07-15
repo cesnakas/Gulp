@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://gulpjs.com/img/gulp.svg" alt="Gulp"/>
+    <img width="250" height="100%" src="/app/images/gulp.svg" alt="Gulp" />
 </div>
 
 # Gulp
