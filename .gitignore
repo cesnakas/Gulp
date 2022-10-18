@@ -1,3 +1,6 @@
+/dist/
+package-lock.json
+
 .idea/
 .vscode/
 
@@ -7,6 +10,3 @@ bower_components/
 
 .DS_Store
 Thumbs.db
-
-/dist/
-package-lock.json
