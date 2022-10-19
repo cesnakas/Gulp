@@ -1,3 +1,0 @@
-/**
- * Sergei Česnakas
- */
