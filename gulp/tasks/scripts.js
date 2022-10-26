@@ -14,6 +14,6 @@ export const scripts = () => {
                 filename: 'main.js',
             }
         }))
-        .pipe(app.gulp.dest(app.path.build.scripts))
+        .pipe(app.gulp.dest(app.path.build.scripts, { sourceMaps: '.' }))
         .pipe(app.plugins.browserSync.stream())
 }

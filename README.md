@@ -1,20 +1,19 @@
-<div align="center">
-    <img width="250" height="100%" src="/src/images/gulp.svg" alt="Gulp" />
-</div>
+<div align="center"><img width="250" height="100%" src="/src/images/gulp.svg" alt="Gulp" /></div>
 
 # Gulp
 
 Building a frontend project with 🥤 Gulp & 📦 Foundation Panini
 
-## Usage
-run `gulp` = `gulp --dev`
+## Get started
+ 
+Install dependencies:
 
-###### Development:
-```
-gulp --dev
+```shell
+$ npm i
 ```
 
-###### Production:
-```
-gulp --prod
+Run the Gulp
+
+```shell
+$ gulp
 ```
