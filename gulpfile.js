@@ -17,19 +17,17 @@ import {server} from './gulp/tasks/server.js'
 import {styles} from './gulp/tasks/styles.js'
 import {scripts} from './gulp/tasks/scripts.js'
 import {images} from './gulp/tasks/images.js'
-import {imagesWebp} from './gulp/tasks/webp.js'
 
 // Watch
-function watcher() {
+const watcher = () => {
     gulp.watch(path.watch.html, html).on('change', gulp.series(html, app.plugins.browserSync.reload))
     gulp.watch(path.watch.styles, styles).on('change', gulp.series(styles, app.plugins.browserSync.reload))
     gulp.watch(path.watch.scripts, scripts).on('change', gulp.parallel(scripts, app.plugins.browserSync.reload))
     gulp.watch(path.watch.images, images).on('change', gulp.series(images, app.plugins.browserSync.reload))
-    gulp.watch(path.watch.images, imagesWebp).on('change', gulp.series(imagesWebp, app.plugins.browserSync.reload))
     gulp.watch(path.watch.files, copy).on('change', gulp.series(copy, app.plugins.browserSync.reload))
 }
 
-const mainTasks = gulp.parallel(html, styles, scripts, images, imagesWebp, copy)
+const mainTasks = gulp.parallel(html, styles, scripts, images, copy)
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server))
 
 gulp.task('default', dev)

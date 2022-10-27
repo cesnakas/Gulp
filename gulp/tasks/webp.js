@@ -8,7 +8,7 @@ export const imagesWebp = () => {
                 message: 'Error: <%= error.message %>'
             })
         ))
-        .pipe(app.plugins.newer(app.path.build.images))
+        .pipe(app.plugins.newer(app.path.build.webp))
         .pipe(webp())
         .pipe(app.gulp.dest(app.path.build.webp))
         .pipe(app.plugins.browserSync.stream())
