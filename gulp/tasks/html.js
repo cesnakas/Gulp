@@ -1,6 +1,7 @@
 import panini from 'panini'
 
 export const html = () => {
+    panini.refresh()
     return app.gulp.src(app.path.src.html)
         .pipe(app.plugins.plumber(
             app.plugins.notify.onError({
@@ -17,9 +18,4 @@ export const html = () => {
         }))
         .pipe(app.gulp.dest(app.path.build.html))
         .pipe(app.plugins.browserSync.stream())
-}
-
-// Refresh
-export const resetPages = (done) => {
-    panini.refresh()
 }
