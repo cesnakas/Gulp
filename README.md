@@ -12,7 +12,7 @@ Install dependencies:
 $ npm i
 ```
 
-Run the Gulp
+Run the Gulp:
 
 ```shell
 $ gulp
