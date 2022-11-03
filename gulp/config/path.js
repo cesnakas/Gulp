@@ -23,7 +23,11 @@ export const path = {
         files: `${buildFolder}/files/`,
     },
     watch: {
-        html: `${srcFolder}/{pages,layouts,partials}/**/*.{html,php}`,
+        html: [
+            `${srcFolder}/{pages,layouts,partials}/**/*.{html,php}`,
+            `${srcFolder}/data/**/*.{yml,json}`,
+            `${srcFolder}/helpers/**/*.js`
+        ],
         styles: `${srcFolder}/styles/**/*.scss`,
         scripts: `${srcFolder}/scripts/**/*.js`,
         images: `${srcFolder}/images/**/*.{jpeg,jpg,png,gif,svg,webp,ico}`,
