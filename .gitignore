@@ -1,4 +1,5 @@
 /dist/
+package-lock.json
 
 .fleet/
 .idea/
@@ -7,8 +8,6 @@
 node_modules/
 jspm_packages/
 bower_components/
-
-package-lock.json
 
 .DS_Store
 Thumbs.db

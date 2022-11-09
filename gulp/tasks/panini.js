@@ -1,0 +1,15 @@
+import panini from 'panini'
+
+export const htmlPanini = () => {
+    panini.refresh()
+    return app.gulp.src(app.path.src.panini, { sourcemaps: false })
+        .pipe(panini({
+            root:     'app/pages/',
+            layouts:  'app/pages/layouts/',
+            partials: 'app/pages/partials/',
+            helpers:  'app/pages/helpers/',
+            data:     'app/pages/data/'
+        }))
+        .pipe(app.gulp.dest(app.path.dest.panini, { sourcemaps: '.' }))
+        .pipe(app.plugins.browserSync.stream())
+}
