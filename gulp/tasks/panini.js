@@ -1,4 +1,5 @@
 import panini from 'panini'
+import htmlmin from 'gulp-htmlmin'
 
 export const htmlPanini = () => {
     panini.refresh()
@@ -9,6 +10,12 @@ export const htmlPanini = () => {
             partials: 'app/pages/partials/',
             helpers:  'app/pages/helpers/',
             data:     'app/pages/data/'
+        }))
+        .pipe(htmlmin({
+            useShortDoctype: true,
+            sortClassName: true,
+            collapseWhitespace: true,
+            removeComments: true,
         }))
         .pipe(app.gulp.dest(app.path.dest.panini, { sourcemaps: '.' }))
         .pipe(app.plugins.browserSync.stream())
