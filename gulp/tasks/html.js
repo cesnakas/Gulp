@@ -3,12 +3,12 @@ import panini from 'panini'
 export const html = () => {
     panini.refresh()
     return app.gulp.src(app.path.src.html)
-        .pipe(app.plugins.plumber(
-            app.plugins.notify.onError({
+        .pipe(app.plugins.plumber({
+            errorHandler: app.plugins.notify.onError({
+                message: "Error: <%= error.message %>",
                 title: "HTML",
-                message: "Error: <%= error.message %>"
             })
-        ))
+        }))
         .pipe(panini({
             root:     'src/pages/',
             layouts:  'src/pages/layouts/',
@@ -16,6 +16,7 @@ export const html = () => {
             helpers:  'src/pages/helpers/',
             data:     'src/pages/data/'
         }))
+        .pipe(app.plugins.plumber.stop())
         .pipe(app.gulp.dest(app.path.build.html))
         .pipe(app.plugins.browserSync.stream())
 }

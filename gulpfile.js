@@ -21,7 +21,7 @@ import {imagesWebp} from './gulp/tasks/webp.js'
 import { otfToTtf, ttfToWoff, fontStyle } from './gulp/tasks/fonts.js'
 
 // Watch
-function watcher() {
+const watcher = () => {
     gulp.watch(path.watch.html, html).on('change', gulp.series(html, app.plugins.browserSync.reload))
     gulp.watch(path.watch.styles, styles).on('change', gulp.series(styles, app.plugins.browserSync.reload))
     gulp.watch(path.watch.scripts, scripts).on('change', gulp.parallel(scripts, app.plugins.browserSync.reload))
