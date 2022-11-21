@@ -10,22 +10,6 @@
     font-family: JetBrainsMono;	
     font-display: swap;	
     font-style: normal;	
-    font-weight: 200;	
-    src: url("../fonts/JetBrainsMono-ExtraLight.woff2") format("woff2"),	
-    url("../fonts/JetBrainsMono-ExtraLight.woff") format("woff");
-}
-@font-face {	
-    font-family: JetBrainsMono;	
-    font-display: swap;	
-    font-style: normal;	
-    font-weight: 300;	
-    src: url("../fonts/JetBrainsMono-Light.woff2") format("woff2"),	
-    url("../fonts/JetBrainsMono-Light.woff") format("woff");
-}
-@font-face {	
-    font-family: JetBrainsMono;	
-    font-display: swap;	
-    font-style: normal;	
     font-weight: 500;	
     src: url("../fonts/JetBrainsMono-Medium.woff2") format("woff2"),	
     url("../fonts/JetBrainsMono-Medium.woff") format("woff");
@@ -50,63 +34,87 @@
     font-family: JetBrainsMono;	
     font-display: swap;	
     font-style: normal;	
-    font-weight: 800;	
-    src: url("../fonts/JetBrainsMono-ExtraBold.woff2") format("woff2"),	
-    url("../fonts/JetBrainsMono-ExtraBold.woff") format("woff");
+    font-weight: 100;	
+    src: url("../fonts/JetBrainsMono-Thin.woff2") format("woff2"),	
+    url("../fonts/JetBrainsMono-Thin.woff") format("woff");
+}
+@font-face {	
+    font-family: Roboto;	
+    font-display: swap;	
+    font-style: normal;	
+    font-weight: normal;	
+    src: url("../fonts/Roboto.woff2") format("woff2"),	
+    url("../fonts/Roboto.woff") format("woff");
+}
+@font-face {	
+    font-family: JetBrainsMono;	
+    font-display: swap;	
+    font-style: normal;	
+    font-weight: 300;	
+    src: url("../fonts/JetBrainsMono-Light.woff2") format("woff2"),	
+    url("../fonts/JetBrainsMono-Light.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 700;	
-    src: url("../fonts/Roboto/Roboto-Bold.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Bold.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Bold.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Bold.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 300;	
-    src: url("../fonts/Roboto/Roboto-Light.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Light.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Light.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Light.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 500;	
-    src: url("../fonts/Roboto/Roboto-Medium.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Medium.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Medium.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Medium.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 400;	
-    src: url("../fonts/Roboto/Roboto-Regular.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Regular.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Regular.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Regular.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 100;	
-    src: url("../fonts/Roboto/Roboto-Thin.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Thin.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Thin.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Thin.woff") format("woff");
 }
 @font-face {	
     font-family: Roboto\Roboto;	
     font-display: swap;	
     font-style: normal;	
     font-weight: 900;	
-    src: url("../fonts/Roboto/Roboto-Black.woff2") format("woff2"),
-    url("../fonts/Roboto/Roboto-Black.woff") format("woff");
+    src: url("../fonts/Roboto\Roboto-Black.woff2") format("woff2"),	
+    url("../fonts/Roboto\Roboto-Black.woff") format("woff");
 }
 @font-face {	
     font-family: JetBrainsMono;	
     font-display: swap;	
     font-style: normal;	
-    font-weight: 100;	
-    src: url("../fonts/JetBrainsMono-Thin.woff2") format("woff2"),	
-    url("../fonts/JetBrainsMono-Thin.woff") format("woff");
+    font-weight: 800;	
+    src: url("../fonts/JetBrainsMono-ExtraBold.woff2") format("woff2"),	
+    url("../fonts/JetBrainsMono-ExtraBold.woff") format("woff");
+}
+@font-face {	
+    font-family: JetBrainsMono;	
+    font-display: swap;	
+    font-style: normal;	
+    font-weight: 200;	
+    src: url("../fonts/JetBrainsMono-ExtraLight.woff2") format("woff2"),	
+    url("../fonts/JetBrainsMono-ExtraLight.woff") format("woff");
 }
