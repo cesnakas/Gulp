@@ -1,4 +1,3 @@
-<br>
 <div align="center">
     <img width="250px" height="100%" src="gulp.svg" alt="Gulp" />
 </div>
