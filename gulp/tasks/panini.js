@@ -1,10 +1,9 @@
 import panini from 'panini'
 
-export const html = () => {
+export const htmlPanini = () => {
     panini.refresh()
-    return app.gulp.src(app.path.src.html)
-        .pipe(app.plugins.plumber({
-            errorHandler: app.plugins.notify.onError({
+    return app.gulp.src(app.path.src.htmlPanini, {})
+        .pipe(app.plugins.plumber({errorHandler: app.plugins.notify.onError({
                 message: "Error: <%= error.message %>",
                 title: "HTML",
             })
@@ -17,6 +16,6 @@ export const html = () => {
             data:     'src/pages/data/'
         }))
         .pipe(app.plugins.plumber.stop())
-        .pipe(app.gulp.dest(app.path.build.html))
+        .pipe(app.gulp.dest(app.path.dest.htmlPanini, {}))
         .pipe(app.plugins.browserSync.stream())
 }
