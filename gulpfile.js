@@ -18,7 +18,6 @@ import {server} from './gulp/tasks/server.js'
 import {styles} from './gulp/tasks/styles.js'
 import {scripts} from './gulp/tasks/scripts.js'
 import {images} from './gulp/tasks/images.js'
-import {imagesWebp} from './gulp/tasks/webp.js'
 import { otfToTtf, ttfToWoff, fontStyle } from './gulp/tasks/fonts.js'
 
 // Watch
@@ -35,7 +34,7 @@ const watcher = () => {
 const fonts = gulp.series(otfToTtf, ttfToWoff, fontStyle)
 
 // Main task
-const mainTasks = gulp.series(fonts, gulp.parallel(htmlPanini, styles, scripts, images, imagesWebp, copy))
+const mainTasks = gulp.series(fonts, gulp.parallel(htmlPanini, styles, scripts, images, copy))
 const dev = gulp.series(reset, mainTasks, gulp.parallel(watcher, server))
 
 gulp.task('default', dev)
