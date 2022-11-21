@@ -29,24 +29,24 @@ export const ttfToWoff = () => {
         // convert to .woff
         .pipe(fonter({ formats: ['woff'] }))
         // upload to build folder
-        .pipe(app.gulp.dest(`${app.path.build.fonts}`))
+        .pipe(app.gulp.dest(`${app.path.dest.fonts}`))
         // search for .ttf fonts
         .pipe(app.gulp.src(`${app.path.srcFolder}/fonts/**/*.ttf`))
         // convert to .woff2
         .pipe(ttf2woff2())
         // upload to build folder
-        .pipe(app.gulp.dest(`${app.path.build.fonts}`))
+        .pipe(app.gulp.dest(`${app.path.dest.fonts}`))
         // search for .woff & woff2 fonts
         .pipe(app.gulp.src(`${app.path.srcFolder}/fonts/**/*.{woff,woff2}`))
         // upload to build folder
-        .pipe(app.gulp.dest(`${app.path.build.fonts}`))
+        .pipe(app.gulp.dest(`${app.path.dest.fonts}`))
 }
 
 export const fontStyle = () => {
     // Style file for connecting fonts
     let fontsFile = `${app.path.srcFolder}/styles/_fonts.scss`
     // Checking if font file exist
-    fs.readdir(app.path.build.fonts, function (err, fontsFiles) {
+    fs.readdir(app.path.dest.fonts, function (err, fontsFiles) {
         if (fontsFiles) {
             // Checking if there is a style file for connecting fonts
             if (!fs.existsSync(fontsFile)) {

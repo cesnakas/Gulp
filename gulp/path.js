@@ -22,6 +22,7 @@ export const path = {
         // Old path
         images: `${destFolder}/images/`,
         svg: `${destFolder}/images/svg/`,
+        fonts: `${destFolder}/fonts/`,
         files: `${destFolder}/files/`,
     },
     watch: {
