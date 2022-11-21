@@ -10,15 +10,15 @@ export const images = () => {
             })
         ))
         // checking for images update
-        .pipe(app.plugins.newer(app.path.build.images))
+        .pipe(app.plugins.newer(app.path.dest.images))
         // convert to WebP
         .pipe(webp())
         // upload WebP images
-        .pipe(app.gulp.dest(app.path.build.images))
+        .pipe(app.gulp.dest(app.path.dest.images))
         // back to sources
         .pipe(app.gulp.src(app.path.src.images))
         // check for images update
-        .pipe(app.plugins.newer(app.path.build.images))
+        .pipe(app.plugins.newer(app.path.dest.images))
         // images optimization jpeg, jpg, png, gif, svg
         .pipe(imagemin({
             quality: 80, // JPEG
@@ -32,6 +32,6 @@ export const images = () => {
                 { removeDimensions: true }
             ],
         }))
-        .pipe(app.gulp.dest(app.path.build.images))
+        .pipe(app.gulp.dest(app.path.dest.images))
         .pipe(app.plugins.browserSync.stream())
 }

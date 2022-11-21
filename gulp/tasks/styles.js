@@ -1,7 +1,7 @@
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import sourceMaps from 'gulp-sourcemaps'
-import autoPrefixer from 'gulp-autoprefixer'
+import autoprefixer from 'gulp-autoprefixer'
 import cleanCss from 'gulp-clean-css'
 import rename from 'gulp-rename'
 import groupCssMediaQueries from 'gulp-group-css-media-queries'
@@ -18,8 +18,8 @@ export const styles = () => {
         .pipe(sass.sync({
             outputStyle: 'compressed'
         }))
-        .pipe(groupCssMediaQueries())
-        .pipe(autoPrefixer({
+        // .pipe(groupCssMediaQueries())
+        .pipe(autoprefixer({
             grid: true,
             cascade: true,
             overrideBrowserslist: ['last 3 versions'],
@@ -27,6 +27,6 @@ export const styles = () => {
         // .pipe(app.gulp.dest(app.path.build.styles)) // main.css
         .pipe(cleanCss())
         // .pipe(rename({ extname: '.min.css' }))
-        .pipe(app.gulp.dest(app.path.build.styles, { sourcemaps: '.' }))
+        .pipe(app.gulp.dest(app.path.dest.styles, { sourcemaps: '.' }))
         .pipe(app.plugins.browserSync.stream())
 }
