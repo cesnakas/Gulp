@@ -1,5 +1,5 @@
-<div align="center" style="background-color: #cf4547">
-    <img width="250px" height="100%" src="gulp.svg" alt="gulp" />
+<div align="center">
+    <img width="auto" height="320px" src="gulp.svg" alt="gulp" />
 </div>
 
 # Gulp
