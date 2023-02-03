@@ -12,16 +12,19 @@ Building a frontend project with 🥤 Gulp
 - Panini
 - Sass
 
-## Get started
+# Get started
  
 Install dependencies:
-
 ```shell
 $ npm i
 ```
 
 Run the Gulp:
-
 ```shell
 $ gulp
+```
+
+Update all dependencies:
+```shell
+$ npm update --save
 ```
