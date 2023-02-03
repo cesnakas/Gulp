@@ -1,6 +1,6 @@
 {
   "name": "gulp",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Gulp",
   "author": "Sergei Česnakas",
   "license": "MIT",
@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/cesnakas/gulp#readme",
   "devDependencies": {
-    "@babel/core": "^7.20.7",
+    "@babel/core": "^7.20.12",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
-    "babel-loader": "^9.1.0",
+    "babel-loader": "^9.1.2",
     "browser-sync": "^2.27.11",
     "del": "^7.0.0",
     "gulp": "^4.0.2",
@@ -50,7 +50,7 @@
     "gulp-webp": "^4.0.1",
     "gulp-webpcss": "^1.1.1",
     "panini": "^1.7.2",
-    "sass": "^1.57.1",
+    "sass": "^1.58.0",
     "webp-converter": "*2.2.3",
     "webpack": "^5.75.0",
     "webpack-stream": "^7.0.0"
