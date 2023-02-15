@@ -3,15 +3,14 @@ import webpack from 'webpack-stream'
 export const scripts = () => {
   return app.gulp.src(app.path.src.scripts, { /*sourcemaps: true*/ })
   .pipe(app.plugins.plumber({errorHandler: app.plugins.notify.onError({
-      message: 'Error: <%= error.message %>',
-      title: 'JavaScript',
+      message: 'Error: <%= error.message %>', title: 'JavaScript',
     })
   }))
   .pipe(webpack({
     devtool: 'source-map',
-    mode: 'production', // or development
+    mode: 'production', // production or development
     output: {
-      filename: 'main.js',
+      filename: 'app.js',
     }
   }))
   .pipe(app.plugins.plumber.stop())

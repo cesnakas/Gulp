@@ -1,12 +1,12 @@
-import gulp from 'gulp'
-import { path } from './gulp/path.js'
+import gulp        from 'gulp'
+import { path }    from './gulp/config/path.js'
 import { plugins } from './gulp/config/plugins.js'
 
 // Global
 global.app = {
-    path: path,
-    gulp: gulp,
-    plugins: plugins,
+  path: path,
+  gulp: gulp,
+  plugins: plugins,
 }
 
 // Import
@@ -22,12 +22,12 @@ import { otfToTtf, ttfToWoff, fontStyle } from './gulp/tasks/fonts.js'
 
 // Watch
 const watcher = () => {
-    gulp.watch(path.watch.htmlPanini, htmlPanini).on('change', gulp.series(htmlPanini, app.plugins.browserSync.reload))
-    // gulp.watch(path.watch.html, html).on('change', gulp.series(html, app.plugins.browserSync.reload))
-    gulp.watch(path.watch.styles, styles).on('change', gulp.series(styles, app.plugins.browserSync.reload))
-    gulp.watch(path.watch.scripts, scripts).on('change', gulp.parallel(scripts, app.plugins.browserSync.reload))
-    gulp.watch(path.watch.images, images).on('change', gulp.series(images, app.plugins.browserSync.reload))
-    gulp.watch(path.watch.files, copy).on('change', gulp.series(copy, app.plugins.browserSync.reload))
+  gulp.watch(path.watch.htmlPanini, htmlPanini).on('change', gulp.series(htmlPanini, app.plugins.browserSync.reload))
+  // gulp.watch(path.watch.html, html).on('change', gulp.series(html, app.plugins.browserSync.reload))
+  gulp.watch(path.watch.styles, styles).on('change', gulp.series(styles, app.plugins.browserSync.reload))
+  gulp.watch(path.watch.scripts, scripts).on('change', gulp.parallel(scripts, app.plugins.browserSync.reload))
+  gulp.watch(path.watch.images, images).on('change', gulp.series(images, app.plugins.browserSync.reload))
+  gulp.watch(path.watch.files, copy).on('change', gulp.series(copy, app.plugins.browserSync.reload))
 }
 
 // Fonts processing
