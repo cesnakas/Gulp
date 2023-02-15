@@ -15,6 +15,7 @@ export const path = {
     ],
     images: `${srcFolder}/images/**/*.{jpeg,jpg,png,gif,svg,webp}`,
     svg: `${srcFolder}/images/**/*.svg`,
+    favicon: `${srcFolder}/favicon/**/*.{ico,png,svg}`,
     files: `${srcFolder}/files/**/*.*`,
   },
   dest: {
@@ -35,6 +36,7 @@ export const path = {
     styles: `${srcFolder}/styles/**/*.scss`,
     scripts: `${srcFolder}/scripts/**/*.js`,
     images: `${srcFolder}/images/**/*.{jpeg,jpg,png,gif,svg,webp,ico}`,
+    favicon: `${srcFolder}/favicon/**/*.{ico,png,svg}`,
     files: `${srcFolder}/files/**/*.*`,
   },
   rootFolder: `${rootFolder}`,
